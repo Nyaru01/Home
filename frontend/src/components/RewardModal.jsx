@@ -4,7 +4,6 @@ import api from '../api';
 
 const RewardModal = ({ isOpen, onClose, onRewardCreated }) => {
     const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
     const [cost, setCost] = useState(50);
 
     const handleSubmit = async (e) => {
@@ -12,7 +11,7 @@ const RewardModal = ({ isOpen, onClose, onRewardCreated }) => {
         try {
             await api.post('/rewards', {
                 title,
-                description,
+                description: '',
                 cost: parseInt(cost),
                 icon_ref: 'gift'
             });
@@ -20,39 +19,41 @@ const RewardModal = ({ isOpen, onClose, onRewardCreated }) => {
             onClose();
             // Reset form
             setTitle('');
-            setDescription('');
             setCost(50);
         } catch (error) {
-            alert('Error creating reward');
+            alert('Erreur lors de la création du cadeau');
         }
     };
 
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
-            <div className="glass w-full max-w-sm p-6 rounded-2xl shadow-2xl animate-in zoom-in-95 duration-200">
-                <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-xl font-bold">New Reward</h2>
-                    <button onClick={onClose} className="p-1 hover:bg-slate-100 rounded-full"><X size={20} /></button>
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
+            <div className="bg-white w-full max-w-sm p-8 rounded-[2rem] shadow-2xl animate-in zoom-in-95 duration-200 border-2 border-slate-50">
+                <div className="flex justify-between items-center mb-8">
+                    <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tight">Nouveau Cadeau</h2>
+                    <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-xl transition-colors text-slate-400 hover:text-slate-600"><X size={24} /></button>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Reward Name</label>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="space-y-2">
+                        <label className="block text-sm font-bold text-slate-700 ml-1">Nom du trésor</label>
                         <input
                             type="text" required value={title} onChange={e => setTitle(e.target.value)}
-                            className="w-full px-4 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-primary-500 outline-none"
+                            className="w-full px-5 py-4 rounded-2xl bg-slate-50 border-2 border-slate-100 focus:border-primary-400 outline-none transition-all placeholder:text-slate-300 font-bold"
+                            placeholder="Ex: Un tour de manège"
                         />
                     </div>
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Points Cost</label>
+                    <div className="space-y-2">
+                        <label className="block text-sm font-bold text-slate-700 ml-1">Prix en étoiles</label>
                         <input
                             type="number" required value={cost} onChange={e => setCost(e.target.value)}
-                            className="w-full px-4 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-primary-500 outline-none"
+                            className="w-full px-5 py-4 rounded-2xl bg-slate-50 border-2 border-slate-100 focus:border-primary-400 outline-none transition-all font-black text-accent-600"
                         />
                     </div>
-                    <button type="submit" className="w-full btn-accent py-3 rounded-xl mt-4">Create Reward</button>
+                    <button type="submit" className="w-full py-5 bg-accent-500 text-white rounded-2xl shadow-xl shadow-accent-100 font-black text-lg hover:bg-accent-600 active:scale-95 transition-all mt-4">
+                        Créer le trésor 🎁
+                    </button>
                 </form>
             </div>
         </div>
