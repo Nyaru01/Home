@@ -25,7 +25,7 @@ app.use('/api/users', userRoutes);
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
-app.get('/:path*', (req, res) => {
+app.get('/:pathMatch(.*)', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
 });
 
