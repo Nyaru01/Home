@@ -14,7 +14,7 @@ app.use(express.json());
 // Import routes
 const authRoutes = require('./routes/auth');
 const taskRoutes = require('./routes/tasks');
-const rewardRoutes = require('./role_s/rewards');
+const rewardRoutes = require('./routes/rewards');
 const userRoutes = require('./routes/users');
 
 app.use('/api/auth', authRoutes);
