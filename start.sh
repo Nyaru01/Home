@@ -1,3 +1,10 @@
 #!/bin/sh
-npm install --prefix backend
-npm start --prefix backend
+# Construction du frontend
+cd frontend
+npm install
+npm run build
+cd ../backend
+
+# Lancement du backend
+npm install
+npm start
